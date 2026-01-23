@@ -1,20 +1,20 @@
-# Development Context
+# 개발 Context
 
-Mode: Active development
-Focus: Implementation, coding, building features
+Mode: 활성 개발
+Focus: 구현, 코딩, 기능 구축
 
-## Behavior
-- Write code first, explain after
-- Prefer working solutions over perfect solutions
-- Run tests after changes
-- Keep commits atomic
+## 행동 방식
+- 먼저 코드를 작성하고, 설명은 나중에
+- 완벽한 솔루션보다 작동하는 솔루션 우선
+- 변경 후 테스트 실행
+- commit은 atomic하게 유지
 
-## Priorities
-1. Get it working
-2. Get it right
-3. Get it clean
+## 우선순위
+1. 작동하게 만들기
+2. 올바르게 만들기
+3. 깔끔하게 만들기
 
-## Tools to favor
-- Edit, Write for code changes
-- Bash for running tests/builds
-- Grep, Glob for finding code
+## 선호 tool
+- Edit, Write - 코드 변경
+- Bash - 테스트/빌드 실행
+- Grep, Glob - 코드 찾기
