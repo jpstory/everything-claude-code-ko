@@ -4,57 +4,57 @@ description: Enforce test-driven development workflow. Scaffold interfaces, gene
 
 # TDD Command
 
-This command invokes the **tdd-guide** agent to enforce test-driven development methodology.
+이 command는 **tdd-guide** agent를 호출하여 테스트 주도 개발 방법론을 강제합니다.
 
-## What This Command Does
+## 이 Command의 기능
 
-1. **Scaffold Interfaces** - Define types/interfaces first
-2. **Generate Tests First** - Write failing tests (RED)
-3. **Implement Minimal Code** - Write just enough to pass (GREEN)
-4. **Refactor** - Improve code while keeping tests green (REFACTOR)
-5. **Verify Coverage** - Ensure 80%+ test coverage
+1. **Interface Scaffold** - 먼저 type/interface 정의
+2. **테스트 먼저 생성** - 실패하는 테스트 작성 (RED)
+3. **최소한의 코드 구현** - 통과하기에 충분한 코드만 작성 (GREEN)
+4. **리팩토링** - 테스트를 green으로 유지하며 코드 개선 (REFACTOR)
+5. **커버리지 확인** - 80%+ 테스트 커버리지 보장
 
-## When to Use
+## 사용 시점
 
-Use `/tdd` when:
-- Implementing new features
-- Adding new functions/components
-- Fixing bugs (write test that reproduces bug first)
-- Refactoring existing code
-- Building critical business logic
+다음 경우 `/tdd` 사용:
+- 새 기능 구현
+- 새 함수/컴포넌트 추가
+- 버그 수정 (먼저 버그를 재현하는 테스트 작성)
+- 기존 코드 리팩토링
+- 핵심 비즈니스 로직 구축
 
-## How It Works
+## 작동 방식
 
-The tdd-guide agent will:
+tdd-guide agent가 수행하는 작업:
 
-1. **Define interfaces** for inputs/outputs
-2. **Write tests that will FAIL** (because code doesn't exist yet)
-3. **Run tests** and verify they fail for the right reason
-4. **Write minimal implementation** to make tests pass
-5. **Run tests** and verify they pass
-6. **Refactor** code while keeping tests green
-7. **Check coverage** and add more tests if below 80%
+1. 입력/출력에 대한 **interface 정의**
+2. **실패할 테스트 작성** (코드가 아직 없으므로)
+3. **테스트 실행** 및 올바른 이유로 실패하는지 확인
+4. 테스트를 통과하기 위한 **최소한의 구현 작성**
+5. **테스트 실행** 및 통과 확인
+6. 테스트를 green으로 유지하며 **코드 리팩토링**
+7. **커버리지 확인** 및 80% 미만이면 테스트 추가
 
-## TDD Cycle
+## TDD 사이클
 
 ```
 RED → GREEN → REFACTOR → REPEAT
 
-RED:      Write a failing test
-GREEN:    Write minimal code to pass
-REFACTOR: Improve code, keep tests passing
-REPEAT:   Next feature/scenario
+RED:      실패하는 테스트 작성
+GREEN:    통과할 최소한의 코드 작성
+REFACTOR: 코드 개선, 테스트 통과 유지
+REPEAT:   다음 기능/시나리오
 ```
 
-## Example Usage
+## 사용 예시
 
 ```
-User: /tdd I need a function to calculate market liquidity score
+User: /tdd 마켓 유동성 점수를 계산하는 함수가 필요해
 
 Agent (tdd-guide):
-# TDD Session: Market Liquidity Score Calculator
+# TDD 세션: 마켓 유동성 점수 계산기
 
-## Step 1: Define Interface (SCAFFOLD)
+## Step 1: Interface 정의 (SCAFFOLD)
 
 ```typescript
 // lib/liquidity.ts
@@ -66,19 +66,19 @@ export interface MarketData {
 }
 
 export function calculateLiquidityScore(market: MarketData): number {
-  // TODO: Implementation
+  // TODO: 구현
   throw new Error('Not implemented')
 }
 ```
 
-## Step 2: Write Failing Test (RED)
+## Step 2: 실패하는 테스트 작성 (RED)
 
 ```typescript
 // lib/liquidity.test.ts
 import { calculateLiquidityScore } from './liquidity'
 
 describe('calculateLiquidityScore', () => {
-  it('should return high score for liquid market', () => {
+  it('유동성 높은 마켓에 높은 점수를 반환해야 한다', () => {
     const market = {
       totalVolume: 100000,
       bidAskSpread: 0.01,
@@ -92,12 +92,12 @@ describe('calculateLiquidityScore', () => {
     expect(score).toBeLessThanOrEqual(100)
   })
 
-  it('should return low score for illiquid market', () => {
+  it('유동성 낮은 마켓에 낮은 점수를 반환해야 한다', () => {
     const market = {
       totalVolume: 100,
       bidAskSpread: 0.5,
       activeTraders: 2,
-      lastTradeTime: new Date(Date.now() - 86400000) // 1 day ago
+      lastTradeTime: new Date(Date.now() - 86400000) // 1일 전
     }
 
     const score = calculateLiquidityScore(market)
@@ -106,7 +106,7 @@ describe('calculateLiquidityScore', () => {
     expect(score).toBeGreaterThanOrEqual(0)
   })
 
-  it('should handle edge case: zero volume', () => {
+  it('edge case: 거래량 0을 처리해야 한다', () => {
     const market = {
       totalVolume: 0,
       bidAskSpread: 0,
@@ -121,40 +121,40 @@ describe('calculateLiquidityScore', () => {
 })
 ```
 
-## Step 3: Run Tests - Verify FAIL
+## Step 3: 테스트 실행 - 실패 확인
 
 ```bash
 npm test lib/liquidity.test.ts
 
 FAIL lib/liquidity.test.ts
-  ✕ should return high score for liquid market (2 ms)
+  ✕ 유동성 높은 마켓에 높은 점수를 반환해야 한다 (2 ms)
     Error: Not implemented
 
 1 test failed, 0 passed
 ```
 
-✅ Tests fail as expected. Ready to implement.
+✅ 예상대로 테스트 실패. 구현 준비 완료.
 
-## Step 4: Implement Minimal Code (GREEN)
+## Step 4: 최소한의 코드 구현 (GREEN)
 
 ```typescript
 // lib/liquidity.ts
 export function calculateLiquidityScore(market: MarketData): number {
-  // Handle zero volume edge case
+  // 거래량 0 edge case 처리
   if (market.totalVolume === 0) {
     return 0
   }
 
-  // Calculate component scores (0-100 scale)
+  // 컴포넌트 점수 계산 (0-100 스케일)
   const volumeScore = Math.min(market.totalVolume / 1000, 100)
   const spreadScore = Math.max(100 - (market.bidAskSpread * 1000), 0)
   const traderScore = Math.min(market.activeTraders / 10, 100)
 
-  // Recent activity bonus
+  // 최근 활동 보너스
   const hoursSinceLastTrade = (Date.now() - market.lastTradeTime.getTime()) / (1000 * 60 * 60)
   const recencyScore = Math.max(100 - (hoursSinceLastTrade * 10), 0)
 
-  // Weighted average
+  // 가중 평균
   const score = (
     volumeScore * 0.4 +
     spreadScore * 0.3 +
@@ -162,29 +162,29 @@ export function calculateLiquidityScore(market: MarketData): number {
     recencyScore * 0.1
   )
 
-  return Math.min(Math.max(score, 0), 100) // Clamp to 0-100
+  return Math.min(Math.max(score, 0), 100) // 0-100으로 제한
 }
 ```
 
-## Step 5: Run Tests - Verify PASS
+## Step 5: 테스트 실행 - 통과 확인
 
 ```bash
 npm test lib/liquidity.test.ts
 
 PASS lib/liquidity.test.ts
-  ✓ should return high score for liquid market (3 ms)
-  ✓ should return low score for illiquid market (2 ms)
-  ✓ should handle edge case: zero volume (1 ms)
+  ✓ 유동성 높은 마켓에 높은 점수를 반환해야 한다 (3 ms)
+  ✓ 유동성 낮은 마켓에 낮은 점수를 반환해야 한다 (2 ms)
+  ✓ edge case: 거래량 0을 처리해야 한다 (1 ms)
 
 3 tests passed
 ```
 
-✅ All tests passing!
+✅ 모든 테스트 통과!
 
-## Step 6: Refactor (IMPROVE)
+## Step 6: 리팩토링 (IMPROVE)
 
 ```typescript
-// lib/liquidity.ts - Refactored with constants and better readability
+// lib/liquidity.ts - 상수와 가독성 개선으로 리팩토링
 const WEIGHTS = {
   VOLUME: 0.4,
   SPREAD: 0.3,
@@ -223,22 +223,22 @@ export function calculateLiquidityScore(market: MarketData): number {
 }
 ```
 
-## Step 7: Verify Tests Still Pass
+## Step 7: 테스트 여전히 통과하는지 확인
 
 ```bash
 npm test lib/liquidity.test.ts
 
 PASS lib/liquidity.test.ts
-  ✓ should return high score for liquid market (3 ms)
-  ✓ should return low score for illiquid market (2 ms)
-  ✓ should handle edge case: zero volume (1 ms)
+  ✓ 유동성 높은 마켓에 높은 점수를 반환해야 한다 (3 ms)
+  ✓ 유동성 낮은 마켓에 낮은 점수를 반환해야 한다 (2 ms)
+  ✓ edge case: 거래량 0을 처리해야 한다 (1 ms)
 
 3 tests passed
 ```
 
-✅ Refactoring complete, tests still passing!
+✅ 리팩토링 완료, 테스트 여전히 통과!
 
-## Step 8: Check Coverage
+## Step 8: 커버리지 확인
 
 ```bash
 npm test -- --coverage lib/liquidity.test.ts
@@ -250,77 +250,77 @@ liquidity.ts   |   100   |   100    |   100   |   100
 Coverage: 100% ✅ (Target: 80%)
 ```
 
-✅ TDD session complete!
+✅ TDD 세션 완료!
 ```
 
-## TDD Best Practices
+## TDD Best Practice
 
-**DO:**
-- ✅ Write the test FIRST, before any implementation
-- ✅ Run tests and verify they FAIL before implementing
-- ✅ Write minimal code to make tests pass
-- ✅ Refactor only after tests are green
-- ✅ Add edge cases and error scenarios
-- ✅ Aim for 80%+ coverage (100% for critical code)
+**해야 할 것:**
+- ✅ 구현 전에 테스트를 먼저 작성
+- ✅ 구현 전에 테스트 실행하여 실패 확인
+- ✅ 테스트를 통과할 최소한의 코드 작성
+- ✅ 테스트가 green일 때만 리팩토링
+- ✅ edge case와 에러 시나리오 추가
+- ✅ 80%+ 커버리지 목표 (핵심 코드는 100%)
 
-**DON'T:**
-- ❌ Write implementation before tests
-- ❌ Skip running tests after each change
-- ❌ Write too much code at once
-- ❌ Ignore failing tests
-- ❌ Test implementation details (test behavior)
-- ❌ Mock everything (prefer integration tests)
+**하지 말아야 할 것:**
+- ❌ 테스트 전에 구현 작성
+- ❌ 각 변경 후 테스트 실행 건너뛰기
+- ❌ 한 번에 너무 많은 코드 작성
+- ❌ 실패하는 테스트 무시
+- ❌ 구현 세부사항 테스트 (동작 테스트)
+- ❌ 모든 것을 mock (통합 테스트 선호)
 
-## Test Types to Include
+## 포함할 테스트 유형
 
-**Unit Tests** (Function-level):
-- Happy path scenarios
-- Edge cases (empty, null, max values)
-- Error conditions
-- Boundary values
+**Unit 테스트** (함수 레벨):
+- Happy path 시나리오
+- Edge case (빈 값, null, 최대값)
+- 에러 조건
+- 경계값
 
-**Integration Tests** (Component-level):
-- API endpoints
-- Database operations
-- External service calls
-- React components with hooks
+**Integration 테스트** (컴포넌트 레벨):
+- API endpoint
+- Database 연산
+- 외부 서비스 호출
+- hook이 있는 React 컴포넌트
 
-**E2E Tests** (use `/e2e` command):
-- Critical user flows
-- Multi-step processes
-- Full stack integration
+**E2E 테스트** (`/e2e` command 사용):
+- 핵심 사용자 flow
+- 다단계 프로세스
+- 전체 스택 통합
 
-## Coverage Requirements
+## 커버리지 요구사항
 
-- **80% minimum** for all code
-- **100% required** for:
-  - Financial calculations
-  - Authentication logic
-  - Security-critical code
-  - Core business logic
+- **80% 최소** 모든 코드
+- **100% 필수** 대상:
+  - 금융 계산
+  - 인증 로직
+  - 보안 핵심 코드
+  - 핵심 비즈니스 로직
 
-## Important Notes
+## 중요 참고사항
 
-**MANDATORY**: Tests must be written BEFORE implementation. The TDD cycle is:
+**필수**: 테스트는 반드시 구현 전에 작성. TDD 사이클:
 
-1. **RED** - Write failing test
-2. **GREEN** - Implement to pass
-3. **REFACTOR** - Improve code
+1. **RED** - 실패하는 테스트 작성
+2. **GREEN** - 통과하도록 구현
+3. **REFACTOR** - 코드 개선
 
-Never skip the RED phase. Never write code before tests.
+RED 단계를 절대 건너뛰지 마세요. 테스트 전에 코드를 작성하지 마세요.
 
-## Integration with Other Commands
+## 다른 Command와의 통합
 
-- Use `/plan` first to understand what to build
-- Use `/tdd` to implement with tests
-- Use `/build-and-fix` if build errors occur
-- Use `/code-review` to review implementation
-- Use `/test-coverage` to verify coverage
+- `/plan`으로 먼저 무엇을 만들지 이해
+- `/tdd`로 테스트와 함께 구현
+- `/build-and-fix`로 빌드 오류 발생 시 해결
+- `/code-review`로 구현 리뷰
+- `/test-coverage`로 커버리지 확인
 
-## Related Agents
+## 관련 Agent
 
-This command invokes the `tdd-guide` agent located at:
+이 command는 다음 위치의 `tdd-guide` agent를 호출합니다:
 `~/.claude/agents/tdd-guide.md`
 
-And can reference the `tdd-workflow` skill at:
+그리고 다음 위치의 `tdd-workflow` skill을 참조할 수 있습니다:
 `~/.claude/skills/tdd-workflow/`

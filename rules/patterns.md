@@ -1,6 +1,6 @@
-# Common Patterns
+# 공통 패턴
 
-## API Response Format
+## API Response 형식
 
 ```typescript
 interface ApiResponse<T> {
@@ -15,7 +15,7 @@ interface ApiResponse<T> {
 }
 ```
 
-## Custom Hooks Pattern
+## Custom Hook 패턴
 
 ```typescript
 export function useDebounce<T>(value: T, delay: number): T {
@@ -30,7 +30,7 @@ export function useDebounce<T>(value: T, delay: number): T {
 }
 ```
 
-## Repository Pattern
+## Repository 패턴
 
 ```typescript
 interface Repository<T> {
@@ -42,14 +42,14 @@ interface Repository<T> {
 }
 ```
 
-## Skeleton Projects
+## Skeleton 프로젝트
 
-When implementing new functionality:
-1. Search for battle-tested skeleton projects
-2. Use parallel agents to evaluate options:
-   - Security assessment
-   - Extensibility analysis
-   - Relevance scoring
-   - Implementation planning
-3. Clone best match as foundation
-4. Iterate within proven structure
+새 기능 구현 시:
+1. 실전 검증된 skeleton 프로젝트 검색
+2. 병렬 agent로 옵션 평가:
+   - 보안 평가
+   - 확장성 분석
+   - 관련성 점수
+   - 구현 계획
+3. 가장 적합한 것을 기반으로 clone
+4. 검증된 구조 내에서 반복

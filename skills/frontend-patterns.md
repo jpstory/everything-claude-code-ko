@@ -3,16 +3,16 @@ name: frontend-patterns
 description: Frontend development patterns for React, Next.js, state management, performance optimization, and UI best practices.
 ---
 
-# Frontend Development Patterns
+# 프론트엔드 개발 패턴
 
-Modern frontend patterns for React, Next.js, and performant user interfaces.
+React, Next.js, 그리고 성능 좋은 사용자 인터페이스를 위한 현대적인 프론트엔드 패턴.
 
-## Component Patterns
+## 컴포넌트 패턴
 
-### Composition Over Inheritance
+### 상속보다 합성
 
 ```typescript
-// ✅ GOOD: Component composition
+// ✅ 좋음: 컴포넌트 합성
 interface CardProps {
   children: React.ReactNode
   variant?: 'default' | 'outlined'
@@ -30,7 +30,7 @@ export function CardBody({ children }: { children: React.ReactNode }) {
   return <div className="card-body">{children}</div>
 }
 
-// Usage
+// 사용법
 <Card>
   <CardHeader>Title</CardHeader>
   <CardBody>Content</CardBody>
@@ -78,7 +78,7 @@ export function Tab({ id, children }: { id: string, children: React.ReactNode })
   )
 }
 
-// Usage
+// 사용법
 <Tabs defaultTab="overview">
   <TabList>
     <Tab id="overview">Overview</Tab>
@@ -87,7 +87,7 @@ export function Tab({ id, children }: { id: string, children: React.ReactNode })
 </Tabs>
 ```
 
-### Render Props Pattern
+### Render Props 패턴
 
 ```typescript
 interface DataLoaderProps<T> {
@@ -111,7 +111,7 @@ export function DataLoader<T>({ url, children }: DataLoaderProps<T>) {
   return <>{children(data, loading, error)}</>
 }
 
-// Usage
+// 사용법
 <DataLoader<Market[]> url="/api/markets">
   {(markets, loading, error) => {
     if (loading) return <Spinner />
@@ -121,9 +121,9 @@ export function DataLoader<T>({ url, children }: DataLoaderProps<T>) {
 </DataLoader>
 ```
 
-## Custom Hooks Patterns
+## 커스텀 훅 패턴
 
-### State Management Hook
+### 상태 관리 훅
 
 ```typescript
 export function useToggle(initialValue = false): [boolean, () => void] {
@@ -136,11 +136,11 @@ export function useToggle(initialValue = false): [boolean, () => void] {
   return [value, toggle]
 }
 
-// Usage
+// 사용법
 const [isOpen, toggleOpen] = useToggle()
 ```
 
-### Async Data Fetching Hook
+### 비동기 데이터 가져오기 훅
 
 ```typescript
 interface UseQueryOptions<T> {
@@ -184,7 +184,7 @@ export function useQuery<T>(
   return { data, error, loading, refetch }
 }
 
-// Usage
+// 사용법
 const { data: markets, loading, error, refetch } = useQuery(
   'markets',
   () => fetch('/api/markets').then(r => r.json()),
@@ -195,7 +195,7 @@ const { data: markets, loading, error, refetch } = useQuery(
 )
 ```
 
-### Debounce Hook
+### 디바운스 훅
 
 ```typescript
 export function useDebounce<T>(value: T, delay: number): T {
@@ -212,7 +212,7 @@ export function useDebounce<T>(value: T, delay: number): T {
   return debouncedValue
 }
 
-// Usage
+// 사용법
 const [searchQuery, setSearchQuery] = useState('')
 const debouncedQuery = useDebounce(searchQuery, 500)
 
@@ -223,9 +223,9 @@ useEffect(() => {
 }, [debouncedQuery])
 ```
 
-## State Management Patterns
+## 상태 관리 패턴
 
-### Context + Reducer Pattern
+### Context + Reducer 패턴
 
 ```typescript
 interface State {
@@ -278,22 +278,22 @@ export function useMarkets() {
 }
 ```
 
-## Performance Optimization
+## 성능 최적화
 
-### Memoization
+### 메모이제이션
 
 ```typescript
-// ✅ useMemo for expensive computations
+// ✅ 비용이 큰 계산에 useMemo
 const sortedMarkets = useMemo(() => {
   return markets.sort((a, b) => b.volume - a.volume)
 }, [markets])
 
-// ✅ useCallback for functions passed to children
+// ✅ 자식에게 전달되는 함수에 useCallback
 const handleSearch = useCallback((query: string) => {
   setSearchQuery(query)
 }, [])
 
-// ✅ React.memo for pure components
+// ✅ 순수 컴포넌트에 React.memo
 export const MarketCard = React.memo<MarketCardProps>(({ market }) => {
   return (
     <div className="market-card">
@@ -304,12 +304,12 @@ export const MarketCard = React.memo<MarketCardProps>(({ market }) => {
 })
 ```
 
-### Code Splitting & Lazy Loading
+### 코드 스플리팅 & Lazy Loading
 
 ```typescript
 import { lazy, Suspense } from 'react'
 
-// ✅ Lazy load heavy components
+// ✅ 무거운 컴포넌트 Lazy Load
 const HeavyChart = lazy(() => import('./HeavyChart'))
 const ThreeJsBackground = lazy(() => import('./ThreeJsBackground'))
 
@@ -328,7 +328,7 @@ export function Dashboard() {
 }
 ```
 
-### Virtualization for Long Lists
+### 긴 목록을 위한 가상화
 
 ```typescript
 import { useVirtualizer } from '@tanstack/react-virtual'
@@ -339,8 +339,8 @@ export function VirtualMarketList({ markets }: { markets: Market[] }) {
   const virtualizer = useVirtualizer({
     count: markets.length,
     getScrollElement: () => parentRef.current,
-    estimateSize: () => 100,  // Estimated row height
-    overscan: 5  // Extra items to render
+    estimateSize: () => 100,  // 예상 행 높이
+    overscan: 5  // 추가로 렌더링할 항목
   })
 
   return (
@@ -372,9 +372,9 @@ export function VirtualMarketList({ markets }: { markets: Market[] }) {
 }
 ```
 
-## Form Handling Patterns
+## 폼 처리 패턴
 
-### Controlled Form with Validation
+### 유효성 검사가 있는 제어 폼
 
 ```typescript
 interface FormData {
@@ -426,9 +426,9 @@ export function CreateMarketForm() {
 
     try {
       await createMarket(formData)
-      // Success handling
+      // 성공 처리
     } catch (error) {
-      // Error handling
+      // 오류 처리
     }
   }
 
@@ -441,7 +441,7 @@ export function CreateMarketForm() {
       />
       {errors.name && <span className="error">{errors.name}</span>}
 
-      {/* Other fields */}
+      {/* 다른 필드 */}
 
       <button type="submit">Create Market</button>
     </form>
@@ -449,7 +449,7 @@ export function CreateMarketForm() {
 }
 ```
 
-## Error Boundary Pattern
+## Error Boundary 패턴
 
 ```typescript
 interface ErrorBoundaryState {
@@ -491,20 +491,20 @@ export class ErrorBoundary extends React.Component<
   }
 }
 
-// Usage
+// 사용법
 <ErrorBoundary>
   <App />
 </ErrorBoundary>
 ```
 
-## Animation Patterns
+## 애니메이션 패턴
 
-### Framer Motion Animations
+### Framer Motion 애니메이션
 
 ```typescript
 import { motion, AnimatePresence } from 'framer-motion'
 
-// ✅ List animations
+// ✅ 목록 애니메이션
 export function AnimatedMarketList({ markets }: { markets: Market[] }) {
   return (
     <AnimatePresence>
@@ -523,7 +523,7 @@ export function AnimatedMarketList({ markets }: { markets: Market[] }) {
   )
 }
 
-// ✅ Modal animations
+// ✅ 모달 애니메이션
 export function Modal({ isOpen, onClose, children }: ModalProps) {
   return (
     <AnimatePresence>
@@ -551,9 +551,9 @@ export function Modal({ isOpen, onClose, children }: ModalProps) {
 }
 ```
 
-## Accessibility Patterns
+## 접근성 패턴
 
-### Keyboard Navigation
+### 키보드 내비게이션
 
 ```typescript
 export function Dropdown({ options, onSelect }: DropdownProps) {
@@ -588,13 +588,13 @@ export function Dropdown({ options, onSelect }: DropdownProps) {
       aria-haspopup="listbox"
       onKeyDown={handleKeyDown}
     >
-      {/* Dropdown implementation */}
+      {/* 드롭다운 구현 */}
     </div>
   )
 }
 ```
 
-### Focus Management
+### 포커스 관리
 
 ```typescript
 export function Modal({ isOpen, onClose, children }: ModalProps) {
@@ -603,13 +603,13 @@ export function Modal({ isOpen, onClose, children }: ModalProps) {
 
   useEffect(() => {
     if (isOpen) {
-      // Save currently focused element
+      // 현재 포커스된 요소 저장
       previousFocusRef.current = document.activeElement as HTMLElement
 
-      // Focus modal
+      // 모달에 포커스
       modalRef.current?.focus()
     } else {
-      // Restore focus when closing
+      // 닫을 때 포커스 복원
       previousFocusRef.current?.focus()
     }
   }, [isOpen])
@@ -628,4 +628,4 @@ export function Modal({ isOpen, onClose, children }: ModalProps) {
 }
 ```
 
-**Remember**: Modern frontend patterns enable maintainable, performant user interfaces. Choose patterns that fit your project complexity.
+**기억하세요**: 현대적인 프론트엔드 패턴은 유지보수 가능하고 성능 좋은 사용자 인터페이스를 가능하게 합니다. 프로젝트 복잡도에 맞는 패턴을 선택하세요.

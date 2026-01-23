@@ -1,45 +1,45 @@
-# Project Guidelines Skill (Example)
+# 프로젝트 가이드라인 스킬 (예시)
 
-This is an example of a project-specific skill. Use this as a template for your own projects.
+이것은 프로젝트 특정 스킬의 예시입니다. 자신의 프로젝트를 위한 템플릿으로 사용하세요.
 
-Based on a real production application: [Zenith](https://zenith.chat) - AI-powered customer discovery platform.
-
----
-
-## When to Use
-
-Reference this skill when working on the specific project it's designed for. Project skills contain:
-- Architecture overview
-- File structure
-- Code patterns
-- Testing requirements
-- Deployment workflow
+실제 프로덕션 애플리케이션 기반: [Zenith](https://zenith.chat) - AI 기반 고객 발견 플랫폼.
 
 ---
 
-## Architecture Overview
+## 사용 시점
 
-**Tech Stack:**
+해당 프로젝트에서 작업할 때 이 스킬을 참조하세요. 프로젝트 스킬에는 다음이 포함됩니다:
+- 아키텍처 개요
+- 파일 구조
+- 코드 패턴
+- 테스팅 요구사항
+- 배포 워크플로우
+
+---
+
+## 아키텍처 개요
+
+**기술 스택:**
 - **Frontend**: Next.js 15 (App Router), TypeScript, React
-- **Backend**: FastAPI (Python), Pydantic models
+- **Backend**: FastAPI (Python), Pydantic 모델
 - **Database**: Supabase (PostgreSQL)
-- **AI**: Claude API with tool calling and structured output
+- **AI**: 도구 호출과 구조화된 출력을 사용하는 Claude API
 - **Deployment**: Google Cloud Run
-- **Testing**: Playwright (E2E), pytest (backend), React Testing Library
+- **Testing**: Playwright (E2E), pytest (백엔드), React Testing Library
 
-**Services:**
+**서비스:**
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │                         Frontend                            │
 │  Next.js 15 + TypeScript + TailwindCSS                     │
-│  Deployed: Vercel / Cloud Run                              │
+│  배포: Vercel / Cloud Run                                   │
 └─────────────────────────────────────────────────────────────┘
                               │
                               ▼
 ┌─────────────────────────────────────────────────────────────┐
 │                         Backend                             │
 │  FastAPI + Python 3.11 + Pydantic                          │
-│  Deployed: Cloud Run                                       │
+│  배포: Cloud Run                                            │
 └─────────────────────────────────────────────────────────────┘
                               │
               ┌───────────────┼───────────────┐
@@ -52,44 +52,44 @@ Reference this skill when working on the specific project it's designed for. Pro
 
 ---
 
-## File Structure
+## 파일 구조
 
 ```
 project/
 ├── frontend/
 │   └── src/
-│       ├── app/              # Next.js app router pages
-│       │   ├── api/          # API routes
-│       │   ├── (auth)/       # Auth-protected routes
-│       │   └── workspace/    # Main app workspace
-│       ├── components/       # React components
-│       │   ├── ui/           # Base UI components
-│       │   ├── forms/        # Form components
-│       │   └── layouts/      # Layout components
-│       ├── hooks/            # Custom React hooks
-│       ├── lib/              # Utilities
-│       ├── types/            # TypeScript definitions
-│       └── config/           # Configuration
+│       ├── app/              # Next.js app router 페이지
+│       │   ├── api/          # API 라우트
+│       │   ├── (auth)/       # 인증 보호 라우트
+│       │   └── workspace/    # 메인 앱 작업 공간
+│       ├── components/       # React 컴포넌트
+│       │   ├── ui/           # 기본 UI 컴포넌트
+│       │   ├── forms/        # 폼 컴포넌트
+│       │   └── layouts/      # 레이아웃 컴포넌트
+│       ├── hooks/            # 커스텀 React 훅
+│       ├── lib/              # 유틸리티
+│       ├── types/            # TypeScript 정의
+│       └── config/           # 설정
 │
 ├── backend/
-│   ├── routers/              # FastAPI route handlers
-│   ├── models.py             # Pydantic models
-│   ├── main.py               # FastAPI app entry
-│   ├── auth_system.py        # Authentication
-│   ├── database.py           # Database operations
-│   ├── services/             # Business logic
-│   └── tests/                # pytest tests
+│   ├── routers/              # FastAPI 라우트 핸들러
+│   ├── models.py             # Pydantic 모델
+│   ├── main.py               # FastAPI 앱 진입점
+│   ├── auth_system.py        # 인증
+│   ├── database.py           # 데이터베이스 작업
+│   ├── services/             # 비즈니스 로직
+│   └── tests/                # pytest 테스트
 │
-├── deploy/                   # Deployment configs
-├── docs/                     # Documentation
-└── scripts/                  # Utility scripts
+├── deploy/                   # 배포 설정
+├── docs/                     # 문서
+└── scripts/                  # 유틸리티 스크립트
 ```
 
 ---
 
-## Code Patterns
+## 코드 패턴
 
-### API Response Format (FastAPI)
+### API 응답 형식 (FastAPI)
 
 ```python
 from pydantic import BaseModel
@@ -111,7 +111,7 @@ class ApiResponse(BaseModel, Generic[T]):
         return cls(success=False, error=error)
 ```
 
-### Frontend API Calls (TypeScript)
+### Frontend API 호출 (TypeScript)
 
 ```typescript
 interface ApiResponse<T> {
@@ -144,7 +144,7 @@ async function fetchApi<T>(
 }
 ```
 
-### Claude AI Integration (Structured Output)
+### Claude AI 통합 (구조화된 출력)
 
 ```python
 from anthropic import Anthropic
@@ -170,7 +170,7 @@ async def analyze_with_claude(content: str) -> AnalysisResult:
         tool_choice={"type": "tool", "name": "provide_analysis"}
     )
 
-    # Extract tool use result
+    # 도구 사용 결과 추출
     tool_use = next(
         block for block in response.content
         if block.type == "tool_use"
@@ -179,7 +179,7 @@ async def analyze_with_claude(content: str) -> AnalysisResult:
     return AnalysisResult(**tool_use.input)
 ```
 
-### Custom Hooks (React)
+### 커스텀 훅 (React)
 
 ```typescript
 import { useState, useCallback } from 'react'
@@ -217,22 +217,22 @@ export function useApi<T>(
 
 ---
 
-## Testing Requirements
+## 테스팅 요구사항
 
 ### Backend (pytest)
 
 ```bash
-# Run all tests
+# 모든 테스트 실행
 poetry run pytest tests/
 
-# Run with coverage
+# 커버리지로 실행
 poetry run pytest tests/ --cov=. --cov-report=html
 
-# Run specific test file
+# 특정 테스트 파일 실행
 poetry run pytest tests/test_auth.py -v
 ```
 
-**Test structure:**
+**테스트 구조:**
 ```python
 import pytest
 from httpx import AsyncClient
@@ -253,17 +253,17 @@ async def test_health_check(client: AsyncClient):
 ### Frontend (React Testing Library)
 
 ```bash
-# Run tests
+# 테스트 실행
 npm run test
 
-# Run with coverage
+# 커버리지로 실행
 npm run test -- --coverage
 
-# Run E2E tests
+# E2E 테스트 실행
 npm run test:e2e
 ```
 
-**Test structure:**
+**테스트 구조:**
 ```typescript
 import { render, screen, fireEvent } from '@testing-library/react'
 import { WorkspacePanel } from './WorkspacePanel'
@@ -284,30 +284,30 @@ describe('WorkspacePanel', () => {
 
 ---
 
-## Deployment Workflow
+## 배포 워크플로우
 
-### Pre-Deployment Checklist
+### 배포 전 체크리스트
 
-- [ ] All tests passing locally
-- [ ] `npm run build` succeeds (frontend)
-- [ ] `poetry run pytest` passes (backend)
-- [ ] No hardcoded secrets
-- [ ] Environment variables documented
-- [ ] Database migrations ready
+- [ ] 모든 테스트 로컬에서 통과
+- [ ] `npm run build` 성공 (frontend)
+- [ ] `poetry run pytest` 통과 (backend)
+- [ ] 하드코딩된 시크릿 없음
+- [ ] 환경 변수 문서화됨
+- [ ] 데이터베이스 마이그레이션 준비됨
 
-### Deployment Commands
+### 배포 명령어
 
 ```bash
-# Build and deploy frontend
+# frontend 빌드 및 배포
 cd frontend && npm run build
 gcloud run deploy frontend --source .
 
-# Build and deploy backend
+# backend 빌드 및 배포
 cd backend
 gcloud run deploy backend --source .
 ```
 
-### Environment Variables
+### 환경 변수
 
 ```bash
 # Frontend (.env.local)
@@ -324,22 +324,22 @@ SUPABASE_KEY=eyJ...
 
 ---
 
-## Critical Rules
+## 중요 규칙
 
-1. **No emojis** in code, comments, or documentation
-2. **Immutability** - never mutate objects or arrays
-3. **TDD** - write tests before implementation
-4. **80% coverage** minimum
-5. **Many small files** - 200-400 lines typical, 800 max
-6. **No console.log** in production code
-7. **Proper error handling** with try/catch
-8. **Input validation** with Pydantic/Zod
+1. **이모지 금지** - 코드, 주석, 문서에 이모지 없음
+2. **불변성** - 객체나 배열을 절대 변경하지 않음
+3. **TDD** - 구현 전에 테스트 작성
+4. **80% 커버리지** 최소
+5. **많은 작은 파일** - 일반적으로 200-400줄, 최대 800줄
+6. **console.log 금지** - 프로덕션 코드에서
+7. **적절한 오류 처리** - try/catch 사용
+8. **입력 유효성 검사** - Pydantic/Zod 사용
 
 ---
 
-## Related Skills
+## 관련 스킬
 
-- `coding-standards.md` - General coding best practices
-- `backend-patterns.md` - API and database patterns
-- `frontend-patterns.md` - React and Next.js patterns
-- `tdd-workflow/` - Test-driven development methodology
+- `coding-standards.md` - 일반 코딩 모범 사례
+- `backend-patterns.md` - API 및 데이터베이스 패턴
+- `frontend-patterns.md` - React 및 Next.js 패턴
+- `tdd-workflow/` - 테스트 주도 개발 방법론
