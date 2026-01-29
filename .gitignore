@@ -24,3 +24,6 @@ node_modules/
 # Personal configs (if any)
 personal/
 private/
+
+# Claude Code local settings
+.claude/settings.local.json
